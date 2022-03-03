@@ -2,14 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 
-namespace WebApp.Controllers {
-
+namespace WebApp.Controllers
+{
     [ApiController]
     [Route("/api/[controller]")]
-    public class ContentController : ControllerBase {
+    public class ContentController : ControllerBase
+    {
         private DataContext context;
 
-        public ContentController(DataContext dataContext) {
+        public ContentController(DataContext dataContext)
+        {
             context = dataContext;
         }
 
@@ -19,17 +21,22 @@ namespace WebApp.Controllers {
         [HttpGet("object/{format?}")]
         [FormatFilter]
         [Produces("application/json", "application/xml")]
-        public async Task<ProductBindingTarget> GetObject() {
+        public async Task<ProductBindingTarget> GetObject()
+        {
             Product p = await context.Products.FirstAsync();
-            return new ProductBindingTarget() {
-                Name = p.Name, Price = p.Price, CategoryId = p.CategoryId,
+            return new ProductBindingTarget()
+            {
+                Name = p.Name,
+                Price = p.Price,
+                CategoryId = p.CategoryId,
                 SupplierId = p.SupplierId
             };
         }
 
         [HttpPost]
         [Consumes("application/json")]
-        public string SaveProductJson(ProductBindingTarget product) {
+        public string SaveProductJson(ProductBindingTarget product)
+        {
             return $"JSON: {product.Name}";
         }
 

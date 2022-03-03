@@ -1,28 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
-namespace WebApp.Controllers {
-
+namespace WebApp.Controllers
+{
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController : ControllerBase {
+    public class ProductsController : ControllerBase
+    {
         private DataContext context;
 
-        public ProductsController(DataContext ctx) {
+        public ProductsController(DataContext ctx)
+        {
             context = ctx;
         }
 
         [HttpGet]
-        public IAsyncEnumerable<Product> GetProducts() {
+        public IAsyncEnumerable<Product> GetProducts()
+        {
             return context.Products.AsAsyncEnumerable();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProduct(long id) {
+        public async Task<IActionResult> GetProduct(long id)
+        {
             Product? p = await context.Products.FindAsync(id);
-            if (p == null) {
+            if (p == null)
+            {
                 return NotFound();
             }
             return Ok(p);
@@ -30,7 +35,8 @@ namespace WebApp.Controllers {
 
         [HttpPost]
         public async Task<IActionResult>
-                SaveProduct(ProductBindingTarget target) {
+                SaveProduct(ProductBindingTarget target)
+        {
             Product p = target.ToProduct();
             await context.Products.AddAsync(p);
             await context.SaveChangesAsync();
@@ -38,19 +44,22 @@ namespace WebApp.Controllers {
         }
 
         [HttpPut]
-        public async Task UpdateProduct(Product product) {
+        public async Task UpdateProduct(Product product)
+        {
             context.Update(product);
             await context.SaveChangesAsync();
         }
 
         [HttpDelete("{id}")]
-        public async Task DeleteProduct(long id) {
+        public async Task DeleteProduct(long id)
+        {
             context.Products.Remove(new Product() { ProductId = id });
             await context.SaveChangesAsync();
         }
 
         [HttpGet("redirect")]
-        public IActionResult Redirect() {
+        public IActionResult Redirect()
+        {
             return RedirectToAction(nameof(GetProduct), new { Id = 1 });
         }
     }
