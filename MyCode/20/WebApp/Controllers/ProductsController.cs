@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
@@ -15,6 +16,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    [SwaggerOperation(Summary = "Get supplier by id",
+        Description = "id should be a number",
+        Tags = new[] { "Suppliers" })]
     public IAsyncEnumerable<Product> GetProducts()
     {
         return context.Products.AsAsyncEnumerable();
@@ -42,7 +46,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut]
-    public async Task UpdateProduct(Product product)
+    public async Task UpdateProduct([SwaggerRequestBody(Description = "Request description")] Product product)
     {
         context.Update(product);
         await context.SaveChangesAsync();

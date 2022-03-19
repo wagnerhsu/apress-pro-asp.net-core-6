@@ -19,6 +19,7 @@ public static class ServiceExtensions
             {
                 Title = "WebApp Swagger"
             });
+            options.EnableAnnotations();
         });
     }
 

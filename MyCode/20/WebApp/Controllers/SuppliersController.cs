@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
@@ -18,7 +19,11 @@ public class SuppliersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<Supplier?> GetSupplier(long id)
+    [SwaggerOperation(Summary = "Get supplier by id",
+        Description = "id should be a number",
+        OperationId = "GetSupplierId",
+        Tags = new[] { "Suppliers" })]
+    public async Task<Supplier?> GetSupplier([SwaggerParameter(Description = "id should be large than zero")] long id)
     {
         var supplier = await context.Suppliers
             .Include(s => s.Products)
