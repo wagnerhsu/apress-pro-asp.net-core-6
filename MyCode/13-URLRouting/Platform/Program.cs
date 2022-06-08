@@ -1,5 +1,6 @@
-using Platform;
+using Serilog;
 
+new SerilogService(SerilogService.DefaultOptions).Initialize();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<RouteOptions>(opts => {
@@ -7,6 +8,12 @@ builder.Services.Configure<RouteOptions>(opts => {
         typeof(CountryRouteConstraint));
 });
 
+builder.Host.ConfigureLogging((context, logging) =>
+{
+    logging.ClearProviders();
+    logging.SetMinimumLevel(LogLevel.Trace);
+    logging.AddSerilog();
+});
 var app = builder.Build();
 
 app.Use(async (context, next) => {
