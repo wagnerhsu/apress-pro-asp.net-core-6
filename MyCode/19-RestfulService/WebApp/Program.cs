@@ -2,14 +2,22 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 using WebApp.Models;
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Async(c => c.Seq("http://localhost:5341"))
+    .WriteTo.Async(c => c.Console())
+    .CreateLogger();
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(LogLevel.Trace);
-builder.Logging.AddConsole();
+builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<DataContext>(opts =>
 {
@@ -18,7 +26,11 @@ builder.Services.AddDbContext<DataContext>(opts =>
     opts.EnableSensitiveDataLogging(true);
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    });
 
 builder.Services.Configure<JsonOptions>(opts =>
 {

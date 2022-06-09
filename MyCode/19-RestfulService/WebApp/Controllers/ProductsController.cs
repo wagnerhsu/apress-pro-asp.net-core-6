@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -8,10 +9,12 @@ namespace WebApp.Controllers
     public class ProductsController : ControllerBase
     {
         private DataContext context;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(DataContext ctx)
+        public ProductsController(DataContext ctx, ILogger<ProductsController> logger)
         {
             context = ctx;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -28,7 +31,10 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            return Ok(p);
+
+            var options = new JsonSerializerOptions();
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            return new JsonResult(p, options);
         }
 
         [HttpPost]

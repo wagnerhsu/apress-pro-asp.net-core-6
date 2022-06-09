@@ -1,10 +1,11 @@
-using Platform.Services;
+﻿using Platform.Services;
 using Platform.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDistributedSqlServerCache(opts => {
+builder.Services.AddDistributedSqlServerCache(opts =>
+{
     opts.ConnectionString
         = builder.Configuration["ConnectionStrings:CacheConnection"];
     opts.SchemaName = "dbo";
@@ -14,7 +15,8 @@ builder.Services.AddDistributedSqlServerCache(opts => {
 builder.Services.AddResponseCaching();
 builder.Services.AddSingleton<IResponseFormatter, HtmlResponseFormatter>();
 
-builder.Services.AddDbContext<CalculationContext>(opts => {
+builder.Services.AddDbContext<CalculationContext>(opts =>
+{
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:CalcConnection"]);
     opts.EnableSensitiveDataLogging(true);
 });
@@ -27,15 +29,20 @@ app.UseResponseCaching();
 
 app.MapEndpoint<Platform.SumEndpoint>("/sum/{count:int=1000000000}");
 
-app.MapGet("/", async context => {
+app.MapGet("/", async context =>
+{
     await context.Response.WriteAsync("Hello World!");
 });
 
 bool cmdLineInit = (app.Configuration["INITDB"] ?? "false") == "true";
-if (app.Environment.IsDevelopment() || cmdLineInit) {
-    var seedData = app.Services.GetRequiredService<SeedData>();
+if (app.Environment.IsDevelopment() || cmdLineInit)
+{
+    using var scope = app.Services.CreateScope();
+
+    var seedData = scope.ServiceProvider.GetRequiredService<SeedData>();
     seedData.SeedDatabase();
 }
-if (!cmdLineInit) {
+if (!cmdLineInit)
+{
     app.Run();
 }
