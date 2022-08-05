@@ -1,13 +1,18 @@
 # Errata for *Pro ASP.NET Core 6*
 
-On **page xx** [Summary of error]:
- 
-Details of error here. Highlight key pieces in **bold**.
+This file contains errors that are likely to prevent the code examples from working as described in ths book. See [this](typos.md) file for small mistakes that I intend to correct in the next edition.
 
-***
+---
 
-On **page xx** [Summary of error]:
- 
-Details of error here. Highlight key pieces in **bold**.
+**Chapter 5**
 
+On Page 83, when describing null state analysis, I wrote:
+
+>But if a variable’s type is string, then it can be assigned null values, which means you can confidently access the features it provides without needing to guard against null references.
+
+This should be:
+
+>But if a variable’s type is string, then it <b>cannot</b> be assigned null values, which means you can confidently access the features it provides without needing to guard against null references.
+
+(Thanks to Aidan Plunkitt for reporting this problem)
 ***
