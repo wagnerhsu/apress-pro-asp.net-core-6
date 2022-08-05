@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using PlatformCommon;
+using Serilog;
 using Serilog.WxLibrary;
 using Step02;
 
@@ -11,6 +12,7 @@ builder.Host.ConfigureLogging(logging =>
     logging.SetMinimumLevel(LogLevel.Trace);
     logging.AddSerilog();
 });
+builder.Services.Configure<MessageOptions>(builder.Configuration.GetSection("Location"));
 var app = builder.Build();
 
 app.Map("/", EndPoints.Home);
