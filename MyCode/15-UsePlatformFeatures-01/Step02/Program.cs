@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using Serilog.WxLibrary;
+using Step02;
 
 var serilogService = new SerilogService(SerilogService.DefaultOptions);
 serilogService.Initialize();
@@ -12,10 +13,5 @@ builder.Host.ConfigureLogging(logging =>
 });
 var app = builder.Build();
 
-app.Map("/", async (HttpContext context, ILoggerFactory loggerFactory) =>
-{
-    var logger = loggerFactory.CreateLogger<Program>();
-    logger.LogInformation("Hello World");
-    await context.Response.WriteAsync("Hello World!");
-});
+app.Map("/", EndPoints.Home);
 app.Run();

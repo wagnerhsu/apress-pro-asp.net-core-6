@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Step02": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53525;http://localhost:53526"
+    }
+  }
+}
