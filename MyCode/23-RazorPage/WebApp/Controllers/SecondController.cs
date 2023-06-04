@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+public class SecondController : Controller
 {
-    public class SecondController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View("Common");
-        }
+        return View("Common");
     }
 }

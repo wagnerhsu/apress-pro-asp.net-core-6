@@ -2,33 +2,32 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 
-namespace WebApp.Pages
+namespace WebApp.Pages;
+
+public class EditorModel : PageModel
 {
-    public class EditorModel : PageModel
+    private DataContext _context;
+
+    public Product? Product { get; set; }
+
+    public EditorModel(DataContext ctx)
     {
-        private DataContext context;
+        _context = ctx;
+    }
 
-        public Product? Product { get; set; }
+    public async Task OnGetAsync(long id)
+    {
+        Product = await _context.Products.FindAsync(id);
+    }
 
-        public EditorModel(DataContext ctx)
+    public async Task<IActionResult> OnPostAsync(long id, decimal price)
+    {
+        Product? p = await _context.Products.FindAsync(id);
+        if (p != null)
         {
-            context = ctx;
+            p.Price = price;
         }
-
-        public async Task OnGetAsync(long id)
-        {
-            Product = await context.Products.FindAsync(id);
-        }
-
-        public async Task<IActionResult> OnPostAsync(long id, decimal price)
-        {
-            Product? p = await context.Products.FindAsync(id);
-            if (p != null)
-            {
-                p.Price = price;
-            }
-            await context.SaveChangesAsync();
-            return RedirectToPage();
-        }
+        await _context.SaveChangesAsync();
+        return RedirectToPage();
     }
 }
