@@ -7,14 +7,14 @@ namespace WebApp.Controllers;
 
 [ViewComponent(Name = "CitiesControllerHybrid")]
 public class CitiesController : Controller {
-    private CitiesData data;
+    private CitiesData _data;
 
     public CitiesController(CitiesData cdata) {
-        data = cdata;
+        _data = cdata;
     }
 
     public IActionResult Index() {
-        return View(data.Cities);
+        return View(_data.Cities);
     }
 
     public IViewComponentResult Invoke() {
@@ -22,8 +22,8 @@ public class CitiesController : Controller {
             ViewData = new ViewDataDictionary<CityViewModel>(
                 ViewData,
                 new CityViewModel {
-                    Cities = data.Cities.Count(),
-                    Population = data.Cities.Sum(c => c.Population)
+                    Cities = _data.Cities.Count(),
+                    Population = _data.Cities.Sum(c => c.Population)
                 })
         };
     }

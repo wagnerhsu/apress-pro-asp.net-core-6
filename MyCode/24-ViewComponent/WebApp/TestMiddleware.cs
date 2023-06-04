@@ -3,10 +3,10 @@
 namespace WebApp;
 
 public class TestMiddleware {
-    private RequestDelegate nextDelegate;
+    private RequestDelegate _nextDelegate;
 
     public TestMiddleware(RequestDelegate next) {
-        nextDelegate = next;
+        _nextDelegate = next;
     }
 
     public async Task Invoke(HttpContext context, DataContext dataContext) {
@@ -18,7 +18,7 @@ public class TestMiddleware {
             await context.Response.WriteAsync(
                 $"There are {dataContext.Suppliers.Count()} suppliers\n");
         } else {
-            await nextDelegate(context);
+            await _nextDelegate(context);
         }
     }
 }

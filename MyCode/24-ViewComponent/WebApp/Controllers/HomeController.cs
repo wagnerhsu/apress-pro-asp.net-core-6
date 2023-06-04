@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore;
 namespace WebApp.Controllers;
 
 public class HomeController : Controller {
-    private DataContext context;
+    private DataContext _context;
 
     public HomeController(DataContext ctx) {
-        context = ctx;
+        _context = ctx;
     }
 
     public async Task<IActionResult> Index(long id = 1) {
         ViewBag.AveragePrice =
-            await context.Products.AverageAsync(p => p.Price);
-        return View(await context.Products.FindAsync(id));
+            await _context.Products.AverageAsync(p => p.Price);
+        return View(await _context.Products.FindAsync(id));
     }
 
     public IActionResult List() {
-        return View(context.Products);
+        return View(_context.Products);
     }
 
     public IActionResult Html() {

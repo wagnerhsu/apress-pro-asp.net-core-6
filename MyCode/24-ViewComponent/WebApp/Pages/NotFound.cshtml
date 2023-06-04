@@ -22,17 +22,17 @@
 @functions {
 
     public class NotFoundModel: PageModel {
-        private DataContext context;
+        private DataContext _context;
 
         public IEnumerable<Product> Products { get; set; } 
             = Enumerable.Empty<Product>();
 
         public NotFoundModel(DataContext ctx) {
-            context = ctx;
+            _context = ctx;
         }
 
         public void OnGetAsync(long id = 1) {
-            Products = context.Products;
+            Products = _context.Products;
         }
     }
 }

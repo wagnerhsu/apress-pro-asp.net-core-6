@@ -7,10 +7,10 @@ namespace WebApp.Controllers;
 [ApiController]
 [Route("/api/[controller]")]
 public class ContentController : ControllerBase {
-    private DataContext context;
+    private DataContext _context;
 
     public ContentController(DataContext dataContext) {
-        context = dataContext;
+        _context = dataContext;
     }
 
     [HttpGet("string")]
@@ -20,7 +20,7 @@ public class ContentController : ControllerBase {
     [FormatFilter]
     [Produces("application/json", "application/xml")]
     public async Task<ProductBindingTarget> GetObject() {
-        Product p = await context.Products.FirstAsync();
+        Product p = await _context.Products.FirstAsync();
         return new ProductBindingTarget() {
             Name = p.Name, Price = p.Price, CategoryId = p.CategoryId,
             SupplierId = p.SupplierId
