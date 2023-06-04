@@ -91,6 +91,19 @@ On Page 128, the Tip contains the word `Asset`, which should be `Assert`.
 
 ***
 
+On page 137, this sentence:
+
+>   This approach is that it tends to produce unit tests that focus only on the parts of the application code that were difficult to write or that needed some serious debugging, leaving some aspects of a feature only partially tested or untested altogether.
+
+should be:
+
+>   **The problem with this** approach is that it tends to produce unit tests that focus only on the parts of the application code that were difficult to write or that needed some serious debugging, leaving some aspects of a feature only partially tested or untested altogether.
+
+(Thanks to Jim Becker for reporting this problem)
+
+***
+
+
 **Chapter 7**
 
 On page 145, the first sentence should be:
@@ -231,6 +244,12 @@ It should be:
 > Since this Razor Page has been configured ***without*** a page model class, I can apply the attribute with an `@attribute` expression.
 
 (Thanks to Abdul W Yousufzai for reporting this problem)
+
+***
+
+On page 278, Listing 11-14 contains `div` elements that are configured to provide field-level validation for the username and password fields. Validation will only work with `span` elements, and these validation elements are  not required anyway because there is summary validation as well. 
+
+(Thanks to Jeff Hatch for reporting this problem)
 
 ***
 
@@ -462,6 +481,12 @@ On page 438, the paragraph following the table contains a sentence that gives th
 
 **Chapter 17**
 
+On page 458, the instructions following Listing 17-4 incorrectly specify the HTTPS scheme in the request URL. This should be HTTP.
+
+(Thanks to Uzoma Inyama for reporting this problem)
+
+---
+
 On page 461, this sentence specifies the wrong type for configuration with the `AddDistributedMemoryCache` method :
 
 >   This cache is configured using the `MemoryCacheOptions` class, whose most useful properties are described in Table 17-6. 
@@ -512,6 +537,20 @@ https://docs.microsoft.com/en-gb/aspnet/core/security/cors
 
 ---
 
+On page 511, the `UpdateProduct` method at the top of the page contains this statement:
+
+    context.Update(product);
+
+This statement works because the DataContext class inherits an `Update` method that accepts any object. The statement should have been:
+
+    context.Products.Update(product)
+
+The revised statement calls a method that is defined with a generic type parameter, which allows the compiler to highlight problems with argument types.
+
+(Thanks to Jiong hui Luo for reporting this problem)
+
+---
+
 On page 511, both statements in the `UpdateProduct` method have changed and should be marked in bold.
 
 (Thanks to Abdul W Yousufzai for reporting this problem)
@@ -549,6 +588,20 @@ On page 519, the text before `Listing 19-25` should read:
 ---
 
 **Chapter 20**
+
+On page 527, the introduction includes the phrase:
+
+>   how to use content negations
+
+This should be:
+
+> how to use content ***negotiations*** 
+
+
+(Thanks to Jiong hui Luo for reporting this problem)
+
+---
+
 
 On page 536, this sentence: 
 
@@ -598,6 +651,17 @@ The text before  Listing 22-14 doesn't correctly describe the purpose of the lis
 
 ---
 
+On page 617, the paragraph that follows the figure contains this sentence:
+
+>   There are two ways to solve this problem. The first is...
+
+The following text doesn't make it clear that the second way to solve this problem is to use the `IsSectionDefined` method, which is desribed in the Testing for Layout Sections section.
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+
+---
+
 **Chapter 23**
 
 The text before Listing 23-6 should make it clear that the routing pattern must be used in conjunction with the parameters defined by the `OnGet` method.
@@ -627,3 +691,91 @@ On page 669, the caption for `Listing 24-9` and the paragraph before the listing
 
 (Thanks to Stuart Willows for reporting this problem)
 
+---
+
+On pages 682, 683, and 684, the bold statements in the listings contain additional or incorrect characters. The bold statement in Listing 24-22 should be:
+
+    <vc:city-summary theme-name="secondary" />
+
+The bold statement in Listing 24-23 should be:
+
+    <vc:city-summary theme-name="danger" />
+
+The bold statement in Listing 24-24 should be:
+
+    public IViewComponentResult Invoke(string themeName="success") {
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+---
+
+**Chapter 25**
+
+On page 697, the introductory text for tag helpers shows the wrong srt of attributes for the untransformed element. The fragment of markup should be:
+
+    <tr bg-color="primary">
+        <th colspan="2">Product Summary</th>
+    </tr>
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+---
+
+**Chapter 26**
+
+On page 743, Listing 26-10 contains this element:
+
+    <script asp-src-include="lib/jquery**/*.min.js"></script>
+
+which should be:
+
+    <script asp-src-include="lib/jquery/**/*.min.js"></script>
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+---
+
+**Chapter 30**
+
+On page 929, this sentence:
+
+>    URL segment and throws an ArgumentOutOfRangeException if its value is greater than 50. If there is a value and it is in range, then the action method returns a ViewResult.
+
+which should be:
+
+> URL segment and throws an ArgumentOutOfRangeException if its value is greater than **10**. If there is a value 
+and it is in range, then the action method returns a ViewResult.
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+---
+
+**Chapter 31**
+
+On page 944, the sentence before Listing 31-2 should be:
+
+> Create the **Views/Home/Index.cshtml** files, as shown in Listing 31-2.
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+--- 
+
+**Chapter 39**
+
+On page 1208, the text before Listing 39-7 includes this sentence:
+
+>   ASP.NET Core Identity provides a middleware component that detects the cookie created by the 
+SignInManager<T> class and populates the HttpContex object with details of the authenticated user. 
+
+which should be:
+
+> ASP.NET Core Identity provides a middleware component that detects the cookie created by the 
+SignInManager<T> class and populates the **HttpContext** object with details of the authenticated user. 
+
+(Thanks to Jiong Hui Luo for reporting this problem)
+
+---
+
+On page 1236, the first sentence following the listing should have been removed. 
+
+(Thanks to Jiong Hui Luo for reporting this problem)
