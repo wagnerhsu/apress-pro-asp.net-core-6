@@ -4,6 +4,7 @@
 
 - Upgrade to file scope namespace
 - Demonstrate customized post handler
+- Basic partial view demo
 
 ## 2022-03-03
 
